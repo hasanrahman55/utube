@@ -23,24 +23,30 @@ function displayVideo(videos) {
 
   videos.forEach((video) => {
     const snippet = video.items.snippet;
+    const statistics = video.items.statistics;
     const videoId = video.items?.id;
     if (!snippet || !videoId) return;
 
     const { title, channelTitle, thumbnails } = snippet;
+    const { viewCount } = statistics;
     const { url: thumbnailUrl } = thumbnails.high;
 
     const videoCard = document.createElement("div");
     videoCard.className =
-      "w-80 bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer";
+      "w-full bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer";
     videoCard.innerHTML = `
                     <div class="relative">
                         <img class="w-full h-44 object-cover" src="${thumbnailUrl}" alt="Thumbnail">
                     </div>
                     <div class="p-3 flex space-x-3">
-                        <img class="w-10 h-10 rounded-full" src="https://via.placeholder.com/40" alt="Channel Avatar">
-                        <div>
+                       
+                        <div class="w-full">
                             <h3 class="text-sm font-semibold text-gray-900 leading-tight">${title}</h3>
-                            <p class="text-xs text-gray-500">${channelTitle}</p>
+                            <div class="flex justify-between"> 
+                             <p class="text-xs text-gray-500">${channelTitle}</p>
+                             <p class="text-xs text-gray-500">view ${viewCount} </p>
+                            </div>
+                           
                         </div>
                     </div>
       `;
@@ -53,5 +59,18 @@ function displayVideo(videos) {
     videoContainer.append(videoCard);
   });
 }
+
+//filter functionality
+document.getElementById("searchInput").addEventListener("input", function (e) {
+  const searchText = e.target.value.toLowerCase();
+
+  const filterVideo = videoData.filter((video) =>
+    video.items.snippet.title.toLowerCase().includes(searchText)
+  );
+
+  displayVideo(filterVideo);
+
+  console.log(videoData);
+});
 
 getYoutubeVideos();
