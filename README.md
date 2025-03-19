@@ -12,7 +12,7 @@ A simple YouTube-style video listing page using FreeAPI.
 [Visit Utube](https://utube-green.vercel.app/)
 
 ## 📸 Screenshots
-![Screenshot](desktop.png)
+![Screenshot](screenshot/desktop.png)
 
 ## 🛠️ Tech Stack
 - HTML + TailwindCSS
